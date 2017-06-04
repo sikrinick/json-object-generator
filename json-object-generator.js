@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var exports = module.exports = {};
+module.exports  = generate;
 
 const fourspace = "    ";
 const eightpace = "        ";
@@ -186,6 +186,4 @@ generate(locationSearch, "LocationSearch");
 generate(artistEvents, "ArtistEvents");
 generate(locationEvents, "LocationEvents");
 console.log("Finished.");
-
-exports.generate = generate;
-*/
+    */
