@@ -39,11 +39,17 @@ function __generateClass(obj, name, stream) {
     stream.write(eightpace + "if (typeof json !== \"undefined\") {\n");
     for (let key in obj) {
         if (obj.hasOwnProperty(key)) {
+            let newObj = obj[key];
             let firstKey = key;
-            if (Array.isArray(obj[key])) {
+            let valueName = "json." + key;
+            if (Array.isArray(newObj)) {
                 firstKey = firstKey + "Array"
+            } else if (typeof newObj !== "string" &&
+                typeof newObj !== "boolean" &&
+                typeof newObj !== "number") {
+                valueName = "new " + capFirst(key) + "(" + valueName + ")"
             }
-            stream.write(twelvespace + "this." + firstKey + " = " + "json." + key + ";\n")
+            stream.write(twelvespace + "this." + firstKey + " = " + valueName + ";\n")
         }
     }
     stream.write(eightpace + "}\n");
@@ -75,7 +81,7 @@ function __generateClass(obj, name, stream) {
     }
 }
 
-/* TESTS
+
 const artistSearch = {"resultsPage":
     {"results":
         {"artist":
@@ -186,4 +192,3 @@ generate(locationSearch, "LocationSearch");
 generate(artistEvents, "ArtistEvents");
 generate(locationEvents, "LocationEvents");
 console.log("Finished.");
-    */
